@@ -175,7 +175,7 @@ echo "Installing Ruby"
 sudo apt-get -y install libgdbm-dev libffi-dev
 \curl -L https://get.rvm.io | bash -s stable
 source $HOME/.rvm/scripts/rvm
-rvm install 1.9.2
+rvm install 1.9.2 --verify-downloads 1
 
 # Install Ruby Gems
 echo "Installing Ruby Gems"
