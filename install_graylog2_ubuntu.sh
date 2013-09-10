@@ -79,6 +79,7 @@ rm -Rf *servicewrapper*
 sudo /opt/elasticsearch/bin/service/elasticsearch install
 sudo ln -s `readlink -f elasticsearch/bin/service/elasticsearch` /usr/bin/elasticsearch_ctl
 sed -i -e 's|# cluster.name: elasticsearch|cluster.name: graylog2|' /opt/elasticsearch/config/elasticsearch.yml
+sed -i -e 's|# path.data: /path/to/data|# path.data: /data/elasticsearch|' /opt/elasticsearch/config/elasticsearch.yml
 /etc/init.d/elasticsearch start
 
 # Test elasticsearch
@@ -90,6 +91,14 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | sudo tee /etc/apt/sources.list.d/10gen.list
 sudo apt-get -qq update
 sudo apt-get -y install mongodb-10gen
+
+# Create graylog2-server startup script
+echo "Creating /etc/mongodb.conf conf file"
+(
+cat <<'EOF'
+dbpath=/data/mongo
+EOF
+) | sudo tee /etc/mongodb.conf
 
 # Install graylog2-server
 echo "Installing graylog2-server"
